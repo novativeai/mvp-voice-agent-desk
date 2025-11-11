@@ -2,7 +2,7 @@
   "type": "custom",
   "name": "create_zoho_ticket",
   "description": "Creates a support ticket in Zoho Desk when a customer needs help, reports an issue, or requests assistance that requires follow-up. Use this when the customer's issue cannot be resolved immediately in the conversation.",
-  "url": "http://localhost:3000/api/zoho-desk/tickets",
+  "url": "https://novative-voice-desk.vercel.app/api/zoho-desk/tickets",
   "method": "POST",
   "headers": {
     "Content-Type": "application/json"

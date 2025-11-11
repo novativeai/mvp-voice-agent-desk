@@ -32,11 +32,25 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // If no departmentId provided, get the default department
+    let departmentId = body.departmentId
+    if (!departmentId) {
+      try {
+        const departments = await zohoDeskAPI.getDepartments()
+        const defaultDept = departments.find((dept: { isDefault: boolean }) => dept.isDefault)
+        if (defaultDept) {
+          departmentId = defaultDept.id
+        }
+      } catch (error) {
+        console.warn('Could not fetch default department:', error)
+      }
+    }
+
     // Create the ticket
     const ticket = await zohoDeskAPI.createTicket({
       subject: body.subject,
       description: body.description,
-      departmentId: body.departmentId,
+      departmentId,
       contactId: body.contactId,
       priority: body.priority || 'Medium',
       status: body.status,
