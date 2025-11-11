@@ -205,13 +205,26 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
   const handleSendText = () => {
     if (!textInput.trim()) return
 
-    console.log('[ElevenLabs] 📝 Sending manual text:', textInput)
+    const userMessage = textInput.trim()
+
+    console.log('[ElevenLabs] 📝 Sending manual text:', userMessage)
     console.log('[ElevenLabs] 📝 Conversation status before send:', conversation.status)
-    setDebugInfo(prev => [...prev, `📝 Sending text: ${textInput}`])
+    setDebugInfo(prev => [...prev, `📝 Sending text: ${userMessage}`])
+
+    // Add user message to chat history immediately
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `user-${Date.now()}`,
+        role: 'user',
+        content: userMessage,
+        timestamp: new Date(),
+      },
+    ])
 
     try {
       // Send text message to agent
-      conversation.sendUserMessage(textInput)
+      conversation.sendUserMessage(userMessage)
       console.log('[ElevenLabs] ✅ Message sent successfully')
       setDebugInfo(prev => [...prev, `✅ Message sent`])
     } catch (err) {
