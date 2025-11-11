@@ -1,8 +1,12 @@
+'use client'
+
 import { KnowledgeSearch } from '@/components/rag/KnowledgeSearch'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Button } from '@/components/ui/Button'
 import { MessageSquare, Database, Zap } from 'lucide-react'
 import Link from 'next/link'
+
+export const dynamic = 'force-dynamic'
 
 export default function DemoPage() {
   return (
