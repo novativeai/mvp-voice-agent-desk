@@ -83,6 +83,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
   const [micActive, setMicActive] = useState(false)
   const [debugInfo, setDebugInfo] = useState<string[]>([])
   const [textInput, setTextInput] = useState('')
+  const [micMuted, setMicMuted] = useState(false) // Control mic while typing
   const hasAttemptedConnection = React.useRef(false)
 
   // Zoho Desk state
@@ -92,6 +93,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
 
   // Use the official ElevenLabs React hook
   const conversation = useConversation({
+    micMuted, // Control mic state - mute while typing
     onConnect: () => {
       console.log('[ElevenLabs] ✅ Connected successfully')
       setCustomStatus('connected')
@@ -202,6 +204,31 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
     console.log('[ElevenLabs] Speaker toggle requested (not implemented - SDK handles audio)')
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextInput(e.target.value)
+
+    // Mute mic while typing to prevent agent from listening
+    setMicMuted(true)
+
+    // Signal user activity to prevent agent interruption for 2 seconds
+    conversation.sendUserActivity()
+
+    console.log('[ElevenLabs] ⌨️ Typing - mic muted')
+  }
+
+  const handleInputFocus = () => {
+    setMicMuted(true)
+    console.log('[ElevenLabs] 🎯 Text input focused - mic muted')
+  }
+
+  const handleInputBlur = () => {
+    // Only unmute if input is empty (user not actively typing)
+    if (!textInput.trim()) {
+      setMicMuted(false)
+      console.log('[ElevenLabs] 👂 Text input blurred - mic unmuted')
+    }
+  }
+
   const handleSendText = () => {
     if (!textInput.trim()) return
 
@@ -233,6 +260,10 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
     }
 
     setTextInput('')
+
+    // Unmute mic after sending message so user can speak again
+    setMicMuted(false)
+    console.log('[ElevenLabs] 🎤 Message sent - mic unmuted for voice input')
   }
 
   // Auto-connect on mount with proper cleanup
@@ -578,8 +609,10 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
                 <input
                   type="text"
                   value={textInput}
-                  onChange={(e) => setTextInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendText()}
+                  onChange={handleInputChange}
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSendText()}
                   placeholder="Type message (fallback if voice doesn't work)..."
                   className="flex-1 px-4 py-2 bg-surface-light/20 border border-surface-light/30 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-accent"
                 />
