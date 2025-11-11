@@ -8,7 +8,7 @@ echo "================================"
 echo ""
 echo "Step 1: Open this URL in your browser:"
 echo ""
-echo "https://accounts.zoho.com/oauth/v2/auth?scope=Desk.tickets.ALL,Desk.contacts.ALL,Desk.basic.READ,Desk.settings.READ,Desk.search.READ&client_id=1000.GNFLOVJOPNE1YZ0Y4SVQ6ZPLHNLYFN&response_type=code&access_type=offline&redirect_uri=http://localhost:3000/oauth/callback&prompt=consent"
+echo "https://accounts.zoho.com/oauth/v2/auth?scope=Desk.tickets.ALL,Desk.contacts.ALL,Desk.basic.READ,Desk.settings.READ,Desk.search.READ&client_id=YOUR_CLIENT_ID&response_type=code&access_type=offline&redirect_uri=http://localhost:3000/oauth/callback&prompt=consent"
 echo ""
 echo "Step 2: After granting permissions, you'll be redirected to:"
 echo "http://localhost:3000/oauth/callback?code=XXXXX"
@@ -23,8 +23,8 @@ echo ""
 
 # Make the OAuth token request
 RESPONSE=$(curl -s -X POST "https://accounts.zoho.com/oauth/v2/token" \
-  -d "client_id=1000.GNFLOVJOPNE1YZ0Y4SVQ6ZPLHNLYFN" \
-  -d "client_secret=a756e38a5c1610c6c3b6e755f739443cdc75350e07" \
+  -d "client_id=YOUR_CLIENT_ID" \
+  -d "client_secret=YOUR_CLIENT_SECRET" \
   -d "code=${AUTH_CODE}" \
   -d "redirect_uri=http://localhost:3000/oauth/callback" \
   -d "grant_type=authorization_code")
