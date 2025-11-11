@@ -31,6 +31,7 @@ interface ZohoDeskDepartment {
   id: string
   name: string
   description?: string
+  isDefault?: boolean
 }
 
 interface ZohoDeskAgent {

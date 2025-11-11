@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     if (!departmentId) {
       try {
         const departments = await zohoDeskAPI.getDepartments()
-        const defaultDept = departments.find((dept: { isDefault: boolean }) => dept.isDefault)
+        const defaultDept = departments.find((dept) => dept.isDefault)
         if (defaultDept) {
           departmentId = defaultDept.id
         }
