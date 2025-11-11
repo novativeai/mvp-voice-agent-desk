@@ -102,7 +102,8 @@ class ZohoDeskAPI {
         const errorText = await response.text()
 
         // If 401 Unauthorized, clear token cache and retry once
-        if (response.status === 401 && !options.headers?.['X-Retry-After-Refresh']) {
+        const headersRecord = options.headers as Record<string, string> | undefined
+        if (response.status === 401 && !headersRecord?.['X-Retry-After-Refresh']) {
           console.log('[Zoho Desk] Token expired, refreshing and retrying...')
           tokenManager.clearToken()
 
@@ -287,7 +288,7 @@ class ZohoDeskAPI {
    * Get all information for debugging
    */
   async getAllDebugInfo(): Promise<{
-    organization: any
+    organization: ZohoDeskOrganization | { error: string }
     departments: ZohoDeskDepartment[]
     agents: ZohoDeskAgent[]
     contacts: ZohoDeskContact[]

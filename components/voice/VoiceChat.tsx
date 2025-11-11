@@ -14,6 +14,67 @@ interface VoiceChatProps {
   agentId?: string
 }
 
+// ElevenLabs types
+interface ElevenLabsMessage {
+  type?: string
+  source?: string
+  message?: string
+  text?: string
+  [key: string]: unknown
+}
+
+interface ElevenLabsMode {
+  mode?: 'speaking' | 'listening'
+  [key: string]: unknown
+}
+
+interface ElevenLabsStatus {
+  status?: string
+  [key: string]: unknown
+}
+
+interface ElevenLabsErrorContext {
+  [key: string]: unknown
+}
+
+// Zoho Desk types
+interface ZohoDeskDebugData {
+  organization: {
+    id?: string
+    companyName?: string
+    accountName?: string
+    error?: string
+  }
+  departments: Array<{
+    id: string
+    name: string
+    description?: string
+  }>
+  agents: Array<{
+    id: string
+    name: string
+    email: string
+    roleId?: string
+    photoURL?: string
+  }>
+  contacts: Array<{
+    id: string
+    firstName: string
+    lastName: string
+    email: string
+    phone?: string
+  }>
+  recentTickets: Array<{
+    id: string
+    ticketNumber: string
+    subject: string
+    status: string
+    priority: string
+    createdTime?: string
+    modifiedTime?: string
+  }>
+}
+
 export function VoiceChat({ agentId }: VoiceChatProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [error, setError] = useState<string | null>(null)
@@ -25,7 +86,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
   const hasAttemptedConnection = React.useRef(false)
 
   // Zoho Desk state
-  const [zohoDeskData, setZohoDeskData] = useState<any>(null)
+  const [zohoDeskData, setZohoDeskData] = useState<ZohoDeskDebugData | null>(null)
   const [zohoDeskLoading, setZohoDeskLoading] = useState(true)
   const [zohoDeskError, setZohoDeskError] = useState<string | null>(null)
 
@@ -43,12 +104,12 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
       setCustomStatus('disconnected')
       setDebugInfo(prev => [...prev, '⛔ DISCONNECTED - WebRTC connection lost'])
     },
-    onError: (message: string, context?: any) => {
+    onError: (message: string, context?: ElevenLabsErrorContext) => {
       console.error('[ElevenLabs] ❌ Error:', message, context)
       setError(message)
       setCustomStatus('error')
     },
-    onMessage: (message: any) => {
+    onMessage: (message: ElevenLabsMessage) => {
       // Log ALL messages with full details
       console.log('[ElevenLabs] 📩 RAW MESSAGE:', JSON.stringify(message, null, 2))
       console.log('[ElevenLabs] 📩 Message type:', message.type, 'source:', message.source)
@@ -86,10 +147,10 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
         console.log('[ElevenLabs] ⚠️ Unknown message type:', messageType, 'Full message:', message)
       }
     },
-    onModeChange: (mode: any) => {
+    onModeChange: (mode: ElevenLabsMode | 'speaking' | 'listening') => {
       console.log('[ElevenLabs] 🔄 Mode changed:', mode)
-      const modeValue = mode.mode || mode
-      setCurrentMode(modeValue)
+      const modeValue = typeof mode === 'string' ? mode : mode.mode
+      setCurrentMode(modeValue || null)
       console.log('[ElevenLabs] 🎙️ Current mode:', modeValue)
       setDebugInfo(prev => [...prev, `🔄 Mode: ${modeValue}`])
 
@@ -101,7 +162,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
         setMicActive(false)
       }
     },
-    onStatusChange: (status: any) => {
+    onStatusChange: (status: ElevenLabsStatus | string) => {
       console.log('[ElevenLabs] 📊 Status changed:', status)
 
       // Extract the actual status value
@@ -382,7 +443,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
                 </h3>
                 <div className="text-xs text-text-secondary space-y-1 max-h-32 overflow-y-auto">
                   {zohoDeskData.departments?.length > 0 ? (
-                    zohoDeskData.departments.map((dept: any) => (
+                    zohoDeskData.departments.map((dept) => (
                       <p key={dept.id}>• {dept.name} (ID: {dept.id})</p>
                     ))
                   ) : (
@@ -398,7 +459,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
                 </h3>
                 <div className="text-xs text-text-secondary space-y-1 max-h-32 overflow-y-auto">
                   {zohoDeskData.agents?.length > 0 ? (
-                    zohoDeskData.agents.map((agent: any) => (
+                    zohoDeskData.agents.map((agent) => (
                       <p key={agent.id}>• {agent.name} - {agent.email}</p>
                     ))
                   ) : (
@@ -414,7 +475,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
                 </h3>
                 <div className="text-xs text-text-secondary space-y-1 max-h-32 overflow-y-auto">
                   {zohoDeskData.contacts?.length > 0 ? (
-                    zohoDeskData.contacts.map((contact: any) => (
+                    zohoDeskData.contacts.map((contact) => (
                       <p key={contact.id}>
                         • {contact.firstName} {contact.lastName} - {contact.email}
                       </p>
@@ -432,7 +493,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
                 </h3>
                 <div className="text-xs text-text-secondary space-y-2 max-h-32 overflow-y-auto">
                   {zohoDeskData.recentTickets?.length > 0 ? (
-                    zohoDeskData.recentTickets.map((ticket: any) => (
+                    zohoDeskData.recentTickets.map((ticket) => (
                       <div key={ticket.id} className="border-l-2 border-blue-500 pl-2">
                         <p><strong>#{ticket.ticketNumber}:</strong> {ticket.subject}</p>
                         <p className="text-gray-500">
