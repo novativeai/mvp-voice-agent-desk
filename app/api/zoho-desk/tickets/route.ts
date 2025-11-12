@@ -21,6 +21,9 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
 
+    // Log RAW body FIRST to see exactly what ElevenLabs sent
+    console.log('[Webhook] RAW body from ElevenLabs:', JSON.stringify(body, null, 2))
+
     // Sanitize values - ElevenLabs sometimes sends string "undefined" instead of null
     const sanitize = (value: any) => {
       if (value === 'undefined' || value === undefined || value === null || value === '') {
@@ -43,17 +46,8 @@ export async function POST(request: NextRequest) {
       assigneeId: sanitize(body.assigneeId),
     }
 
-    // Log incoming webhook request for debugging
-    console.log('[Webhook] Received request from ElevenLabs:', JSON.stringify({
-      subject: sanitizedBody.subject,
-      description: sanitizedBody.description?.substring(0, 100) + '...',
-      email: sanitizedBody.email,
-      firstName: sanitizedBody.firstName,
-      lastName: sanitizedBody.lastName,
-      phone: sanitizedBody.phone,
-      priority: sanitizedBody.priority,
-      departmentId: sanitizedBody.departmentId,
-    }, null, 2))
+    // Log AFTER sanitization (undefined values will be omitted by JSON.stringify)
+    console.log('[Webhook] After sanitization (undefined values omitted):', JSON.stringify(sanitizedBody, null, 2))
 
     // Validate required fields
     if (!sanitizedBody.subject || !sanitizedBody.description) {
