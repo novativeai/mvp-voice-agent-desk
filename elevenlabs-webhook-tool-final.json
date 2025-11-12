@@ -14,7 +14,7 @@
       "required": true,
       "properties": [
         {
-          "id": "subject_param",
+          "id": "subject",
           "name": "subject",
           "type": "string",
           "description": "YOU must write a brief, clear summary of the customer's issue based on what they told you. Max 255 characters. Example: 'Dashboard loading slowly for all 50 users since yesterday'",
@@ -23,7 +23,7 @@
           "constant_value": ""
         },
         {
-          "id": "description_param",
+          "id": "description",
           "name": "description",
           "type": "string",
           "description": "YOU must write a detailed explanation (2-3+ sentences) based on the conversation. Include: what the customer was trying to do, what went wrong, when it started, how many users affected, any error messages mentioned. Example: 'Customer reports the dashboard has been loading very slowly since yesterday morning. All 50 users in their organization are affected. Pages that normally load in 2 seconds are now taking 30+ seconds. No error messages, just slow performance.'",
@@ -32,7 +32,7 @@
           "constant_value": ""
         },
         {
-          "id": "email_param",
+          "id": "email",
           "name": "email",
           "type": "string",
           "description": "Customer's email address for follow-up communication. This MUST be collected at the start of every conversation.",
@@ -41,7 +41,7 @@
           "constant_value": ""
         },
         {
-          "id": "firstName_param",
+          "id": "firstName",
           "name": "firstName",
           "type": "string",
           "description": "Customer's first name",
@@ -50,7 +50,7 @@
           "constant_value": ""
         },
         {
-          "id": "lastName_param",
+          "id": "lastName",
           "name": "lastName",
           "type": "string",
           "description": "Customer's last name",
@@ -59,7 +59,7 @@
           "constant_value": ""
         },
         {
-          "id": "phone_param",
+          "id": "phone",
           "name": "phone",
           "type": "string",
           "description": "Customer's phone number",
@@ -68,7 +68,7 @@
           "constant_value": ""
         },
         {
-          "id": "priority_param",
+          "id": "priority",
           "name": "priority",
           "type": "string",
           "enum": ["High", "Medium", "Low"],
@@ -79,7 +79,7 @@
           "constant_value": ""
         },
         {
-          "id": "departmentId_param",
+          "id": "departmentId",
           "name": "departmentId",
           "type": "string",
           "description": "Department ID for routing. Use 1214071000000006907 for general inquiries, 1214071000000390035 for bugs/support, 1214071000000402481 for new features. Leave empty for default routing.",
