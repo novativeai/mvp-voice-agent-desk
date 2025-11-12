@@ -10,9 +10,18 @@ const socialLinks = [
 ]
 
 const footerLinks = {
-  Support: ['Talk to Nova', 'Help Center', 'Documentation', 'Create Ticket'],
-  Services: ['AI Solutions', 'Custom Development', 'Integrations', 'Consulting'],
-  Company: ['About Novative AI', 'Our Projects', 'Contact Us', 'Careers'],
+  Support: [
+    { name: 'Talk to Nova', href: '/chat' },
+    { name: 'Help Center', href: '/demo' },
+  ],
+  Services: [
+    { name: 'AI Solutions', href: 'https://novative.ai' },
+    { name: 'Custom Development', href: 'https://novative.ai' },
+  ],
+  Contact: [
+    { name: 'Email Us', href: 'mailto:contact@novative.ai' },
+    { name: 'Visit Website', href: 'https://novative.ai' },
+  ],
 }
 
 export function Footer() {
@@ -52,12 +61,14 @@ export function Footer() {
               <h4 className="font-medium text-text-primary mb-4">{category}</h4>
               <ul className="space-y-2">
                 {links.map((link) => (
-                  <li key={link}>
+                  <li key={link.name}>
                     <a
-                      href="#"
+                      href={link.href}
                       className="text-body-sm text-text-secondary hover:text-primary transition-colors"
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
-                      {link}
+                      {link.name}
                     </a>
                   </li>
                 ))}

@@ -567,35 +567,12 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
           {customStatus === 'connected' && (
             <div className="text-center mt-2">
               <p className="text-body-sm text-text-secondary">
-                {currentMode === 'speaking' && '🤖 AI is speaking...'}
-                {currentMode === 'listening' && (
-                  <span className="flex items-center justify-center gap-2">
-                    <span>🎤 Listening to you...</span>
-                    {micActive && <span className="text-green-500 animate-pulse">● MIC ACTIVE</span>}
-                    <span className="text-xs text-gray-500">(Speak now)</span>
-                  </span>
-                )}
+                {currentMode === 'speaking' && '🤖 Nova is speaking...'}
+                {currentMode === 'listening' && '🎤 Listening...'}
               </p>
             </div>
           )}
 
-          {/* Debug Panel */}
-          {debugInfo.length > 0 && (
-            <div className="mt-4 p-4 bg-gray-900 rounded-lg max-w-2xl mx-auto">
-              <h3 className="text-xs font-bold text-gray-400 mb-2">Debug Log:</h3>
-              <div className="text-xs text-gray-300 space-y-1 max-h-48 overflow-y-auto font-mono">
-                {debugInfo.map((info, i) => (
-                  <div key={i}>{info}</div>
-                ))}
-              </div>
-              <button
-                onClick={() => setDebugInfo([])}
-                className="mt-2 text-xs text-gray-500 hover:text-gray-300"
-              >
-                Clear Log
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Chat History */}
@@ -644,22 +621,6 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
         </div>
       </div>
 
-      {/* Error Message */}
-      <AnimatePresence>
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-4 left-1/2 transform -translate-x-1/2"
-          >
-            <div className="glass-strong px-6 py-3 rounded-lg flex items-center gap-3 shadow-lg">
-              <AlertCircle className="w-5 h-5 text-red-500" />
-              <p className="text-body-sm text-text-primary">{error}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }
