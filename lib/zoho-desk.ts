@@ -237,12 +237,24 @@ class ZohoDeskAPI {
       if (existingContact) {
         console.log('[Zoho Desk] Found existing contact:', existingContact.id)
         finalContactId = existingContact.id
-      } else if (ticketData.firstName || ticketData.lastName) {
-        // Create new contact if we have name information
+      } else {
+        // Create new contact - extract name from email if not provided
+        let firstName = ticketData.firstName
+        let lastName = ticketData.lastName
+
+        if (!firstName && !lastName) {
+          // Extract name from email (e.g., john.doe@example.com → John Doe)
+          const emailLocalPart = ticketData.email.split('@')[0]
+          const nameParts = emailLocalPart.split(/[._-]/)
+          firstName = nameParts[0]?.charAt(0).toUpperCase() + nameParts[0]?.slice(1) || 'Customer'
+          lastName = nameParts[1]?.charAt(0).toUpperCase() + nameParts[1]?.slice(1) || 'Support'
+          console.log('[Zoho Desk] Extracted name from email:', firstName, lastName)
+        }
+
         console.log('[Zoho Desk] Creating new contact')
         const newContact = await this.createContact({
-          firstName: ticketData.firstName || 'Unknown',
-          lastName: ticketData.lastName || 'Customer',
+          firstName: firstName || 'Unknown',
+          lastName: lastName || 'Customer',
           email: ticketData.email,
           phone: ticketData.phone,
         })
