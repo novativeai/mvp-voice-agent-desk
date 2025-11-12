@@ -21,31 +21,56 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
 
+    // Sanitize values - ElevenLabs sometimes sends string "undefined" instead of null
+    const sanitize = (value: any) => {
+      if (value === 'undefined' || value === undefined || value === null || value === '') {
+        return undefined
+      }
+      return value
+    }
+
+    const sanitizedBody = {
+      subject: sanitize(body.subject),
+      description: sanitize(body.description),
+      email: sanitize(body.email),
+      firstName: sanitize(body.firstName),
+      lastName: sanitize(body.lastName),
+      phone: sanitize(body.phone),
+      priority: sanitize(body.priority),
+      departmentId: sanitize(body.departmentId),
+      contactId: sanitize(body.contactId),
+      status: sanitize(body.status),
+      assigneeId: sanitize(body.assigneeId),
+    }
+
     // Log incoming webhook request for debugging
     console.log('[Webhook] Received request from ElevenLabs:', JSON.stringify({
-      subject: body.subject,
-      description: body.description?.substring(0, 100) + '...',
-      email: body.email,
-      firstName: body.firstName,
-      lastName: body.lastName,
-      phone: body.phone,
-      priority: body.priority,
-      departmentId: body.departmentId,
+      subject: sanitizedBody.subject,
+      description: sanitizedBody.description?.substring(0, 100) + '...',
+      email: sanitizedBody.email,
+      firstName: sanitizedBody.firstName,
+      lastName: sanitizedBody.lastName,
+      phone: sanitizedBody.phone,
+      priority: sanitizedBody.priority,
+      departmentId: sanitizedBody.departmentId,
     }, null, 2))
 
     // Validate required fields
-    if (!body.subject || !body.description) {
+    if (!sanitizedBody.subject || !sanitizedBody.description) {
       return NextResponse.json(
         {
           error: 'Missing required fields',
-          message: 'subject and description are required',
+          message: 'subject and description are required. Received: ' + JSON.stringify({
+            subject: sanitizedBody.subject,
+            description: sanitizedBody.description,
+          }),
         },
         { status: 400 }
       )
     }
 
     // If no departmentId provided, get the default department
-    let departmentId = body.departmentId
+    let departmentId = sanitizedBody.departmentId
     if (!departmentId) {
       try {
         const departments = await zohoDeskAPI.getDepartments()
@@ -60,17 +85,17 @@ export async function POST(request: NextRequest) {
 
     // Create the ticket
     const ticket = await zohoDeskAPI.createTicket({
-      subject: body.subject,
-      description: body.description,
+      subject: sanitizedBody.subject,
+      description: sanitizedBody.description,
       departmentId,
-      contactId: body.contactId,
-      priority: body.priority || 'Medium',
-      status: body.status,
-      assigneeId: body.assigneeId,
-      email: body.email,
-      phone: body.phone,
-      firstName: body.firstName,
-      lastName: body.lastName,
+      contactId: sanitizedBody.contactId,
+      priority: sanitizedBody.priority || 'Medium',
+      status: sanitizedBody.status,
+      assigneeId: sanitizedBody.assigneeId,
+      email: sanitizedBody.email,
+      phone: sanitizedBody.phone,
+      firstName: sanitizedBody.firstName,
+      lastName: sanitizedBody.lastName,
     })
 
     console.log('[Webhook] ✅ Ticket created successfully:', {

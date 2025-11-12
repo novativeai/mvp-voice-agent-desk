@@ -121,9 +121,22 @@ class ZohoDeskAPI {
         throw new Error(`Zoho Desk API Error: ${response.status} - ${errorText}`)
       }
 
-      return await response.json()
+      // Handle empty responses
+      const text = await response.text()
+      if (!text || text.trim() === '') {
+        console.warn('[Zoho Desk] Empty response from API:', url)
+        return {} as T
+      }
+
+      // Parse JSON safely
+      try {
+        return JSON.parse(text)
+      } catch (parseError) {
+        console.error('[Zoho Desk] Failed to parse JSON response:', text.substring(0, 200))
+        throw new Error(`Failed to parse Zoho API response: ${parseError instanceof Error ? parseError.message : 'Invalid JSON'}`)
+      }
     } catch (error) {
-      console.error('Zoho Desk API request failed:', error)
+      console.error('[Zoho Desk] API request failed:', error instanceof Error ? error.message : error)
       throw error
     }
   }
@@ -186,9 +199,17 @@ class ZohoDeskAPI {
       const response = await this.request<{ data: ZohoDeskContact[] }>(
         `/contacts/search?email=${encodeURIComponent(email)}`
       )
+
+      // Handle both array response and empty/null responses
+      if (!response) {
+        console.log('[Zoho Desk] Empty response from contact search')
+        return null
+      }
+
       return response.data && response.data.length > 0 ? response.data[0] : null
     } catch (error) {
-      console.error('Failed to search contact:', error)
+      // Log the full error for debugging
+      console.error('[Zoho Desk] Failed to search contact:', error instanceof Error ? error.message : error)
       return null
     }
   }
