@@ -1,24 +1,35 @@
-# AI Voice Agent MVP
+# Novative AI Customer Support Portal
 
-A modern, production-ready voice AI application built with Next.js 14 and **ElevenLabs Conversational AI with Native RAG**.
+A production-ready AI-powered customer support system with **voice and text chat capabilities**, built with Next.js 14, ElevenLabs Conversational AI, and full **Zoho Desk CRM integration**.
 
-**⚡ 5-Minute Setup:** Upload your knowledge base to ElevenLabs - zero coding required!
+**🎯 Purpose:** Provide 24/7 intelligent customer support for Novative AI clients through Nova, our AI support agent.
+
+**✨ Key Capabilities:**
+- Voice and text-based customer support
+- Automatic ticket creation in Zoho Desk
+- Intelligent department routing
+- Smart contact management
+- Knowledge base search with RAG
 
 **Design Inspired by:** [ltx.studio](https://ltx.studio/) - Professional, dark-themed aesthetic with modern animations
 
 ---
 
-## 🚀 Quick Start (Native RAG - Recommended)
+## 🚀 Quick Start
 
-**Get your voice agent running in 5 minutes:**
+**Get the support portal running:**
 
-1. **Create ElevenLabs account** → [elevenlabs.io](https://elevenlabs.io)
-2. **Upload knowledge base** → Use `docs/sample-knowledge-base.md`
-3. **Get API keys** → Copy Agent ID and API Key
-4. **Configure app** → Add keys to `.env.local`
-5. **Run** → `npm install && npm run dev`
+1. **Clone repository** → `git clone https://github.com/novativeai/mvp-voice-agent-desk.git`
+2. **Install dependencies** → `npm install`
+3. **Configure environment** → Copy `.env.example` to `.env.local` and add credentials
+4. **Setup ElevenLabs** → Create agent and configure webhook tool
+5. **Setup Zoho Desk** → Configure OAuth credentials and departments
+6. **Run** → `npm run dev`
 
-📖 **Detailed Guide:** [docs/NATIVE_RAG_QUICKSTART.md](docs/NATIVE_RAG_QUICKSTART.md)
+📖 **Detailed Guides:**
+- [Quick Start Guide](QUICK_START.md)
+- [Zoho Desk Setup](ZOHO_DESK_SETUP.md)
+- [ElevenLabs Configuration](ELEVENLABS_INTEGRATION.md)
 
 ---
 
@@ -31,18 +42,24 @@ A modern, production-ready voice AI application built with Next.js 14 and **Elev
 - **Glass morphism**: Modern, translucent UI components
 - **Responsive**: Mobile-first design with beautiful layouts on all devices
 
-### 🎤 Voice AI
-- **ElevenLabs Integration**: State-of-the-art conversational AI
-- **Real-Time Streaming**: WebSocket-based audio communication
-- **Natural Dialogue**: Human-like conversations with context awareness
-- **Audio Visualization**: Real-time waveform animations
+### 🎤 Voice AI Support
+- **24/7 Availability**: Nova is always available to help customers
+- **Voice & Text**: Support both voice calls and text chat
+- **Natural Conversations**: Human-like dialogue with empathy and context awareness
+- **Audio Visualization**: Real-time waveform animations during voice calls
 
-### 🧠 Knowledge Base (Native RAG)
-- **Zero-Code Setup**: Upload documents to ElevenLabs dashboard
-- **Automatic Retrieval**: Agent searches knowledge base during conversations
-- **Instant Updates**: Edit content anytime without re-deployment
-- **Production-Ready**: Included in ElevenLabs subscription
-- **Custom RAG Available**: Optional Pinecone + OpenAI implementation for advanced use cases
+### 🎫 Zoho Desk Integration
+- **Auto Ticket Creation**: Complex issues automatically create support tickets
+- **Smart Contact Management**: Automatic contact lookup and creation
+- **Department Routing**: Intelligent routing to Sales, Support, or Development
+- **Priority Assessment**: Automatic priority assignment based on issue severity
+- **OAuth Token Management**: Automatic token refresh (60s preemptive)
+
+### 🧠 Knowledge Base
+- **RAG-Powered Search**: Semantic search through comprehensive documentation
+- **Instant Answers**: Nova searches past solutions and documentation
+- **Always Up-to-Date**: Knowledge base updates reflect immediately
+- **Context-Aware**: Responses tailored to customer's specific situation
 
 ---
 

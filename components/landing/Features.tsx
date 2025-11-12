@@ -2,39 +2,39 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Brain, Zap, Shield, MessageSquare, TrendingUp, Globe } from 'lucide-react'
+import { Headphones, Ticket, Users, Brain, Clock, Sparkles } from 'lucide-react'
 import { GlassCard } from '../ui/GlassCard'
 
 const features = [
   {
+    icon: Headphones,
+    title: 'Voice Support 24/7',
+    description: 'Talk to Nova anytime via voice or text. Get instant answers about Novative AI services, projects, and technical issues.',
+  },
+  {
+    icon: Ticket,
+    title: 'Auto Ticket Creation',
+    description: 'Complex issues are automatically converted into support tickets in Zoho Desk with all conversation context preserved.',
+  },
+  {
+    icon: Users,
+    title: 'Smart Contact Management',
+    description: 'Automatic contact lookup and creation. Your information is saved for faster support on future inquiries.',
+  },
+  {
     icon: Brain,
-    title: 'Advanced RAG',
-    description: 'Retrieval-Augmented Generation for accurate, context-aware responses from your knowledge base.',
+    title: 'Knowledge Base Search',
+    description: 'Nova searches our comprehensive documentation and past solutions to provide accurate, contextual answers instantly.',
   },
   {
-    icon: Zap,
-    title: 'Real-Time Processing',
-    description: 'Lightning-fast response times with WebSocket streaming for natural conversations.',
+    icon: Sparkles,
+    title: 'Intelligent Routing',
+    description: 'Tickets are automatically routed to the right department - sales, technical support, or development team.',
   },
   {
-    icon: Shield,
-    title: 'Enterprise Security',
-    description: 'Bank-level encryption and compliance with GDPR, SOC 2, and HIPAA standards.',
-  },
-  {
-    icon: MessageSquare,
-    title: 'Natural Dialogue',
-    description: 'Human-like conversations with emotion detection and context preservation.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Analytics Dashboard',
-    description: 'Comprehensive insights into conversation quality, sentiment, and performance metrics.',
-  },
-  {
-    icon: Globe,
-    title: 'Multilingual Support',
-    description: 'Communicate in 29+ languages with native pronunciation and cultural awareness.',
+    icon: Clock,
+    title: 'Instant Response',
+    description: 'No more waiting in queues. Get immediate assistance with common questions or create tickets for complex issues.',
   },
 ]
 
@@ -70,10 +70,10 @@ export function Features() {
           className="text-center mb-16"
         >
           <h2 className="font-heading text-h1 text-text-primary mb-4">
-            Powerful Features
+            How Nova Helps You
           </h2>
           <p className="text-body-lg text-text-secondary max-w-2xl mx-auto">
-            Everything you need to deliver exceptional voice-powered customer experiences
+            Get instant support for all your Novative AI inquiries - from technical questions to project consultations
           </p>
         </motion.div>
 

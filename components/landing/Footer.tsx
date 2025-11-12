@@ -1,18 +1,18 @@
 'use client'
 
 import React from 'react'
-import { Github, Twitter, Linkedin } from 'lucide-react'
+import { Globe, Linkedin, Mail } from 'lucide-react'
 
 const socialLinks = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+  { icon: Globe, href: 'https://novative.ai', label: 'Website' },
+  { icon: Linkedin, href: 'https://linkedin.com/company/novative-ai', label: 'LinkedIn' },
+  { icon: Mail, href: 'mailto:contact@novative.ai', label: 'Email' },
 ]
 
 const footerLinks = {
-  Product: ['Features', 'Pricing', 'API Docs', 'Changelog'],
-  Company: ['About', 'Blog', 'Careers', 'Contact'],
-  Legal: ['Privacy', 'Terms', 'Security', 'Compliance'],
+  Support: ['Talk to Nova', 'Help Center', 'Documentation', 'Create Ticket'],
+  Services: ['AI Solutions', 'Custom Development', 'Integrations', 'Consulting'],
+  Company: ['About Novative AI', 'Our Projects', 'Contact Us', 'Careers'],
 }
 
 export function Footer() {
@@ -23,12 +23,12 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
             <h3 className="font-heading text-h4 text-text-primary mb-4">
-              AI Voice Agent
+              Novative AI
             </h3>
             <p className="text-body-sm text-text-secondary mb-6">
-              Next-generation voice AI powered by ElevenLabs
+              AI Solutions & Custom Development. Get support from Nova, our intelligent assistant.
             </p>
-            
+
             {/* Social Links */}
             <div className="flex items-center gap-4">
               {socialLinks.map((social, index) => (
@@ -69,14 +69,14 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-surface-light/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-body-sm text-text-secondary">
-            © 2025 AI Voice Agent. All rights reserved.
+            © 2025 Novative AI. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-body-sm text-text-secondary">
-            <a href="#" className="hover:text-primary transition-colors">
-              Privacy Policy
+            <a href="mailto:contact@novative.ai" className="hover:text-primary transition-colors">
+              contact@novative.ai
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              Terms of Service
+            <a href="https://novative.ai" className="hover:text-primary transition-colors">
+              www.novative.ai
             </a>
           </div>
         </div>

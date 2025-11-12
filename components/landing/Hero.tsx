@@ -26,7 +26,7 @@ export function Hero() {
         >
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="text-sm font-medium text-text-secondary">
-            Powered by ElevenLabs AI
+            24/7 AI-Powered Support
           </span>
         </motion.div>
 
@@ -37,8 +37,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="font-heading text-display-2 sm:text-display-1 mb-6"
         >
-          <span className="block text-text-primary">Experience the</span>
-          <span className="block gradient-text">Future of Voice AI</span>
+          <span className="block text-text-primary">Get Help from</span>
+          <span className="block gradient-text">Nova, Our AI Support Agent</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -48,8 +48,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-body-lg text-text-secondary max-w-2xl mx-auto mb-10"
         >
-          Transform customer interactions with our next-generation AI voice agent.
-          Natural conversations, instant responses, powered by advanced RAG technology.
+          Instant answers to your questions about Novative AI services, custom development projects,
+          and technical support. Talk to Nova anytime, anywhere.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -61,13 +61,13 @@ export function Hero() {
         >
           <Link href="/chat">
             <Button variant="primary" size="lg" icon={Mic}>
-              Start Voice Chat
+              Talk to Support
             </Button>
           </Link>
 
           <Link href="/demo">
             <Button variant="glass" size="lg">
-              Explore RAG Demo
+              View Help Center
             </Button>
           </Link>
         </motion.div>
@@ -80,9 +80,9 @@ export function Hero() {
           className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto"
         >
           {[
-            { label: 'Response Time', value: '<500ms' },
-            { label: 'Accuracy', value: '99.5%' },
-            { label: 'Languages', value: '29+' },
+            { label: 'Response Time', value: '<2 sec' },
+            { label: 'Availability', value: '24/7' },
+            { label: 'Tickets Created', value: 'Auto' },
           ].map((stat, index) => (
             <div key={index} className="text-center">
               <div className="text-h2 font-heading text-primary mb-2">{stat.value}</div>

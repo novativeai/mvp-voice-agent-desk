@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote - MVP Voice Agent Development | Novative AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #2b61ff;
+        }
+
+        .company-info h1 {
+            font-size: 32px;
+            color: #252830;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .company-info p {
+            color: #666;
+            font-size: 14px;
+            margin: 3px 0;
+        }
+
+        .quote-info {
+            text-align: right;
+        }
+
+        .quote-info h2 {
+            font-size: 28px;
+            color: #2b61ff;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .quote-info p {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .quote-info .date {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .project-title {
+            margin: 40px 0 30px 0;
+        }
+
+        .project-title h3 {
+            font-size: 24px;
+            color: #252830;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .project-title p {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .items-table {
+            width: 100%;
+            margin: 40px 0;
+            border-collapse: collapse;
+        }
+
+        .items-table thead {
+            background: #252830;
+            color: white;
+        }
+
+        .items-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .items-table th:last-child {
+            text-align: right;
+        }
+
+        .items-table tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .items-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .items-table td {
+            padding: 16px 15px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .items-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: #252830;
+        }
+
+        .item-description {
+            color: #666;
+            font-size: 13px;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        .category-header {
+            background: #f5f7fa !important;
+            font-weight: 700 !important;
+            color: #2b61ff !important;
+            font-size: 15px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .totals {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            width: 350px;
+            padding: 12px 0;
+            font-size: 16px;
+        }
+
+        .total-row.final {
+            border-top: 3px solid #2b61ff;
+            margin-top: 10px;
+            padding-top: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #2b61ff;
+        }
+
+        .notes {
+            margin-top: 50px;
+            padding: 25px;
+            background: #f5f7fa;
+            border-left: 4px solid #2b61ff;
+            border-radius: 4px;
+        }
+
+        .notes h4 {
+            font-size: 16px;
+            color: #252830;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .notes ul {
+            margin-left: 20px;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .notes li {
+            margin: 8px 0;
+        }
+
+        .acceptance {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .acceptance h4 {
+            font-size: 18px;
+            color: #252830;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .acceptance p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .signature-line {
+            display: flex;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .signature-box {
+            flex: 1;
+        }
+
+        .signature-box p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .signature-box .line {
+            border-bottom: 2px solid #333;
+            margin-bottom: 8px;
+            height: 60px;
+        }
+
+        .signature-box .label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .validity {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background: #fff8e1;
+            border-radius: 4px;
+            border: 1px solid #ffd54f;
+        }
+
+        .validity p {
+            color: #f57c00;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 40px;
+            }
+
+            .items-table tbody tr:hover {
+                background: transparent;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .quote-info {
+                text-align: left;
+            }
+
+            .total-row {
+                width: 100%;
+            }
+
+            .signature-line {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="company-info">
+                <h1>Novative AI</h1>
+                <p>AI Solutions & Custom Development</p>
+                <p>contact@novative.ai</p>
+                <p>www.novative.ai</p>
+            </div>
+            <div class="quote-info">
+                <h2>QUOTE</h2>
+                <p class="date">Date: November 12, 2025</p>
+                <p>Quote #: Q-2025-001</p>
+                <p>Valid for: 30 days</p>
+            </div>
+        </div>
+
+        <!-- Project Title -->
+        <div class="project-title">
+            <h3>MVP Voice Agent with Zoho Desk Integration</h3>
+            <p>Development of a production-ready AI-powered voice customer support system with complete CRM integration, automatic ticket management, and intelligent routing capabilities.</p>
+        </div>
+
+        <!-- Items Table -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th style="width: 70%;">Description</th>
+                    <th style="width: 30%;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Voice Interface -->
+                <tr class="category-header">
+                    <td colspan="2">Voice Interface Development</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Real-Time Voice Chat Interface</strong>
+                        <div class="item-description">React components with WebSocket-based audio streaming, real-time waveform visualization, chat history display, and voice controls</div>
+                    </td>
+                    <td>90€</td>
+                </tr>
+
+                <!-- ElevenLabs Integration -->
+                <tr class="category-header">
+                    <td colspan="2">ElevenLabs Voice AI Integration</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Voice AI Setup & Configuration</strong>
+                        <div class="item-description">ElevenLabs SDK integration, signed URL generation endpoint, audio stream management, and agent initialization</div>
+                    </td>
+                    <td>85€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>System Prompt Engineering</strong>
+                        <div class="item-description">Custom conversational AI prompt with personality definition, tone guidelines, ticket creation flow, and department routing logic (306 lines)</div>
+                    </td>
+                    <td>120€</td>
+                </tr>
+
+                <!-- Zoho Desk Integration -->
+                <tr class="category-header">
+                    <td colspan="2">Zoho Desk CRM Integration</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Complete REST API Client</strong>
+                        <div class="item-description">Full Zoho Desk API implementation with 10+ methods for tickets, contacts, departments, agents, and organization management (1000+ lines)</div>
+                    </td>
+                    <td>180€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>OAuth Token Management System</strong>
+                        <div class="item-description">Automatic token refresh (60s preemptive), caching mechanism, fallback logic, and graceful error handling</div>
+                    </td>
+                    <td>75€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Intelligent Contact Management</strong>
+                        <div class="item-description">Automatic contact search by email, new contact creation with name extraction, duplicate prevention, and contact linking</div>
+                    </td>
+                    <td>90€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Ticket Creation & Management</strong>
+                        <div class="item-description">Automatic ticket creation from voice conversations, department routing, priority assessment, and ticket status tracking</div>
+                    </td>
+                    <td>95€</td>
+                </tr>
+
+                <!-- Webhook & API -->
+                <tr class="category-header">
+                    <td colspan="2">Webhook Integration & Debugging</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Webhook Tool Configuration</strong>
+                        <div class="item-description">ElevenLabs webhook schema design with parameter definitions, validation rules, and department routing configuration</div>
+                    </td>
+                    <td>65€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Parameter Mapping & Root Cause Fix</strong>
+                        <div class="item-description">Identification and resolution of parameter ID mismatch issue (ElevenLabs 'id' vs 'name' field), comprehensive testing and validation</div>
+                    </td>
+                    <td>85€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Data Sanitization & Validation</strong>
+                        <div class="item-description">Input sanitization for undefined values, required field validation, comprehensive error handling, and detailed logging</div>
+                    </td>
+                    <td>55€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>API Endpoints Development</strong>
+                        <div class="item-description">5 production-ready endpoints: ticket creation, Zoho debug, token refresh, signed URL generation, and RAG search</div>
+                    </td>
+                    <td>70€</td>
+                </tr>
+
+                <!-- RAG System -->
+                <tr class="category-header">
+                    <td colspan="2">Knowledge Base & RAG Implementation</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Vector Database Integration</strong>
+                        <div class="item-description">Pinecone setup, OpenAI embeddings (text-embedding-3-small), semantic search with configurable topK, and document ingestion pipeline</div>
+                    </td>
+                    <td>95€</td>
+                </tr>
+
+                <!-- Documentation -->
+                <tr class="category-header">
+                    <td colspan="2">Documentation & Training Materials</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Comprehensive Documentation Suite</strong>
+                        <div class="item-description">24 documentation files (150KB+): setup guides, API reference, troubleshooting, webhook configuration, log monitoring, and integration guides</div>
+                    </td>
+                    <td>110€</td>
+                </tr>
+
+                <!-- Testing & Deployment -->
+                <tr class="category-header">
+                    <td colspan="2">Quality Assurance & Deployment</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Testing & Bug Fixes</strong>
+                        <div class="item-description">Root cause analysis, parameter debugging, integration testing, error handling verification, and production testing</div>
+                    </td>
+                    <td>70€</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Deployment & Configuration</strong>
+                        <div class="item-description">Vercel deployment setup, environment variable management, automatic deployment pipeline, and production monitoring configuration</div>
+                    </td>
+                    <td>65€</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Totals -->
+        <div class="totals">
+            <div class="total-row final">
+                <span>Total</span>
+                <span>1,350€</span>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="notes">
+            <h4>Project Highlights</h4>
+            <ul>
+                <li><strong>3,000+ lines</strong> of production-ready TypeScript code</li>
+                <li><strong>4 major API integrations:</strong> ElevenLabs, Zoho Desk, Pinecone, OpenAI</li>
+                <li><strong>24 comprehensive documentation files</strong> covering setup, configuration, and troubleshooting</li>
+                <li><strong>Automatic contact management:</strong> Smart search, creation, and email-to-name extraction</li>
+                <li><strong>Zero-downtime token refresh:</strong> OAuth tokens refresh 60 seconds before expiry</li>
+                <li><strong>Intelligent routing:</strong> Department-based ticket routing with priority assessment</li>
+                <li><strong>Production-ready:</strong> Error handling, logging, validation, and monitoring infrastructure</li>
+                <li><strong>Fully deployed:</strong> Live on Vercel with automatic deployments from GitHub</li>
+            </ul>
+        </div>
+
+        <!-- Validity Notice -->
+        <div class="validity">
+            <p>⏱ This quote is valid for 30 days from the date of issue</p>
+        </div>
+
+        <!-- Acceptance -->
+        <div class="acceptance">
+            <h4>Quote Acceptance</h4>
+            <p>By signing below, you agree to the services and pricing outlined in this quote.</p>
+
+            <div class="signature-line">
+                <div class="signature-box">
+                    <p>Client Signature</p>
+                    <div class="line"></div>
+                    <p class="label">Signature & Date</p>
+                </div>
+                <div class="signature-box">
+                    <p>Novative AI Representative</p>
+                    <div class="line"></div>
+                    <p class="label">Signature & Date</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
