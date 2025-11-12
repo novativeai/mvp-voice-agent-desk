@@ -21,6 +21,18 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
 
+    // Log incoming webhook request for debugging
+    console.log('[Webhook] Received request from ElevenLabs:', JSON.stringify({
+      subject: body.subject,
+      description: body.description?.substring(0, 100) + '...',
+      email: body.email,
+      firstName: body.firstName,
+      lastName: body.lastName,
+      phone: body.phone,
+      priority: body.priority,
+      departmentId: body.departmentId,
+    }, null, 2))
+
     // Validate required fields
     if (!body.subject || !body.description) {
       return NextResponse.json(
@@ -59,6 +71,14 @@ export async function POST(request: NextRequest) {
       phone: body.phone,
       firstName: body.firstName,
       lastName: body.lastName,
+    })
+
+    console.log('[Webhook] ✅ Ticket created successfully:', {
+      ticketNumber: ticket.ticketNumber,
+      id: ticket.id,
+      subject: ticket.subject,
+      priority: ticket.priority,
+      departmentId: ticket.departmentId,
     })
 
     return NextResponse.json({
