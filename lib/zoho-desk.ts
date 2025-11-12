@@ -232,51 +232,70 @@ class ZohoDeskAPI {
     // Best practice: If email is provided but no contactId, search for or create contact
     if (ticketData.email && !finalContactId) {
       console.log('[Zoho Desk] Searching for contact with email:', ticketData.email)
-      const existingContact = await this.searchContactByEmail(ticketData.email)
 
-      if (existingContact) {
-        console.log('[Zoho Desk] Found existing contact:', existingContact.id)
-        finalContactId = existingContact.id
-      } else {
-        // Create new contact - extract name from email if not provided
-        let firstName = ticketData.firstName
-        let lastName = ticketData.lastName
+      try {
+        const existingContact = await this.searchContactByEmail(ticketData.email)
 
-        if (!firstName && !lastName) {
-          // Extract name from email (e.g., john.doe@example.com → John Doe)
-          const emailLocalPart = ticketData.email.split('@')[0]
-          const nameParts = emailLocalPart.split(/[._-]/)
-          firstName = nameParts[0]?.charAt(0).toUpperCase() + nameParts[0]?.slice(1) || 'Customer'
-          lastName = nameParts[1]?.charAt(0).toUpperCase() + nameParts[1]?.slice(1) || 'Support'
-          console.log('[Zoho Desk] Extracted name from email:', firstName, lastName)
+        if (existingContact) {
+          console.log('[Zoho Desk] Found existing contact:', existingContact.id)
+          finalContactId = existingContact.id
+        } else {
+          // Create new contact - extract name from email if not provided
+          let firstName = ticketData.firstName
+          let lastName = ticketData.lastName
+
+          if (!firstName && !lastName) {
+            // Extract name from email (e.g., john.doe@example.com → John Doe)
+            const emailLocalPart = ticketData.email.split('@')[0]
+            const nameParts = emailLocalPart.split(/[._-]/)
+            firstName = nameParts[0]?.charAt(0).toUpperCase() + nameParts[0]?.slice(1) || 'Customer'
+            lastName = nameParts[1]?.charAt(0).toUpperCase() + nameParts[1]?.slice(1) || 'Support'
+            console.log('[Zoho Desk] Extracted name from email:', firstName, lastName)
+          }
+
+          console.log('[Zoho Desk] Creating new contact with:', { firstName, lastName, email: ticketData.email })
+          const newContact = await this.createContact({
+            firstName: firstName || 'Unknown',
+            lastName: lastName || 'Customer',
+            email: ticketData.email,
+            phone: ticketData.phone,
+          })
+          finalContactId = newContact.id
+          console.log('[Zoho Desk] ✅ Created new contact:', finalContactId)
         }
-
-        console.log('[Zoho Desk] Creating new contact')
-        const newContact = await this.createContact({
-          firstName: firstName || 'Unknown',
-          lastName: lastName || 'Customer',
-          email: ticketData.email,
-          phone: ticketData.phone,
-        })
-        finalContactId = newContact.id
-        console.log('[Zoho Desk] Created new contact:', finalContactId)
+      } catch (contactError) {
+        console.error('[Zoho Desk] ❌ Contact creation/search failed:', contactError)
+        // If contact creation fails, Zoho ticket creation will also fail
+        // We need to throw this error with more context
+        throw new Error(`Failed to create/find contact for ${ticketData.email}: ${contactError instanceof Error ? contactError.message : 'Unknown error'}`)
       }
     }
 
+    // Verify we have a contactId before proceeding
+    if (!finalContactId) {
+      console.error('[Zoho Desk] ❌ No contactId available! Email:', ticketData.email)
+      throw new Error('Cannot create ticket without contactId. Please provide either contactId or email address.')
+    }
+
+    console.log('[Zoho Desk] Using contactId for ticket:', finalContactId)
+
     // Prepare ticket data
-    const ticket = {
+    // Note: When contactId is provided, do NOT include email/phone as those are contact properties
+    const ticket: Record<string, any> = {
       subject: ticketData.subject,
       description: ticketData.description,
-      departmentId: ticketData.departmentId,
       contactId: finalContactId,
       priority: ticketData.priority || 'Medium',
       status: ticketData.status || 'Open',
-      assigneeId: ticketData.assigneeId,
-      email: ticketData.email,
-      phone: ticketData.phone,
       channel: ticketData.channel || 'Phone', // Voice agent = Phone channel
-      category: ticketData.category,
     }
+
+    // Add optional fields only if they have values
+    if (ticketData.departmentId) ticket.departmentId = ticketData.departmentId
+    if (ticketData.assigneeId) ticket.assigneeId = ticketData.assigneeId
+    if (ticketData.category) ticket.category = ticketData.category
+
+    console.log('[Zoho Desk] Ticket payload:', JSON.stringify(ticket, null, 2))
 
     return this.request('/tickets', {
       method: 'POST',
