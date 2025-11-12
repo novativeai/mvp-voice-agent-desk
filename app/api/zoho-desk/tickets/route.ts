@@ -57,6 +57,8 @@ export async function POST(request: NextRequest) {
       assigneeId: body.assigneeId,
       email: body.email,
       phone: body.phone,
+      firstName: body.firstName,
+      lastName: body.lastName,
     })
 
     return NextResponse.json({
