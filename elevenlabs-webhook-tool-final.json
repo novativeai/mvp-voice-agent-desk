@@ -17,7 +17,7 @@
           "id": "subject_param",
           "name": "subject",
           "type": "string",
-          "description": "Brief summary of the customer's issue or request (max 255 characters)",
+          "description": "YOU must write a brief, clear summary of the customer's issue based on what they told you. Max 255 characters. Example: 'Dashboard loading slowly for all 50 users since yesterday'",
           "required": true,
           "dynamic_variable": "",
           "constant_value": ""
@@ -26,7 +26,7 @@
           "id": "description_param",
           "name": "description",
           "type": "string",
-          "description": "Detailed description of the issue, including any error messages, steps taken, or context provided by the customer",
+          "description": "YOU must write a detailed explanation (2-3+ sentences) based on the conversation. Include: what the customer was trying to do, what went wrong, when it started, how many users affected, any error messages mentioned. Example: 'Customer reports the dashboard has been loading very slowly since yesterday morning. All 50 users in their organization are affected. Pages that normally load in 2 seconds are now taking 30+ seconds. No error messages, just slow performance.'",
           "required": true,
           "dynamic_variable": "",
           "constant_value": ""
