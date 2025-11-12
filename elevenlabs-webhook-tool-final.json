@@ -1,7 +1,7 @@
 {
   "type": "webhook",
   "name": "create_zoho_ticket",
-  "description": "Creates a support ticket in Zoho Desk when a customer needs help, reports an issue, or requests assistance that requires follow-up. Use this when the customer's issue cannot be resolved immediately in the conversation.",
+  "description": "Creates a support ticket in Zoho Desk when a customer needs help, reports an issue, or requests assistance that requires follow-up. IMPORTANT: Before calling this tool, you MUST have collected: (1) customer's email address, (2) a clear subject summarizing the issue, and (3) detailed description of what the problem is. Only use this tool after gathering all required information from the customer.",
   "api_schema": {
     "url": "https://novative-voice-desk.vercel.app/api/zoho-desk/tickets",
     "method": "POST",
@@ -9,9 +9,9 @@
     "query_params_schema": [],
     "request_body_schema": {
       "id": "create_zoho_ticket_request",
-      "description": "Request body for creating a Zoho Desk support ticket",
+      "description": "Request body for creating a Zoho Desk support ticket. The agent MUST collect subject and description from the customer before calling this tool.",
       "type": "object",
-      "required": false,
+      "required": true,
       "properties": [
         {
           "id": "subject_param",
@@ -35,8 +35,8 @@
           "id": "email_param",
           "name": "email",
           "type": "string",
-          "description": "Customer's email address for follow-up communication",
-          "required": false,
+          "description": "Customer's email address for follow-up communication. This MUST be collected at the start of every conversation.",
+          "required": true,
           "dynamic_variable": "",
           "constant_value": ""
         },
