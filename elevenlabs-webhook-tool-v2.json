@@ -1,0 +1,103 @@
+{
+  "type": "webhook",
+  "name": "create_zoho_ticket",
+  "description": "Creates a support ticket in Zoho Desk when a customer needs help, reports an issue, or requests assistance that requires follow-up. Use this when the customer's issue cannot be resolved immediately in the conversation.",
+  "api_schema": {
+    "url": "https://novative-voice-desk.vercel.app/api/zoho-desk/tickets",
+    "method": "POST",
+    "path_params_schema": [],
+    "query_params_schema": [],
+    "request_body_schema": {
+      "id": "create_zoho_ticket_request",
+      "description": "Request body for creating a Zoho Desk support ticket",
+      "type": "object",
+      "required": false,
+      "properties": [
+        {
+          "id": "subject_param",
+          "name": "subject",
+          "type": "string",
+          "description": "Brief summary of the customer's issue or request (max 255 characters)",
+          "required": true,
+          "dynamic_variable": false
+        },
+        {
+          "id": "description_param",
+          "name": "description",
+          "type": "string",
+          "description": "Detailed description of the issue, including any error messages, steps taken, or context provided by the customer",
+          "required": true,
+          "dynamic_variable": false
+        },
+        {
+          "id": "email_param",
+          "name": "email",
+          "type": "string",
+          "description": "Customer's email address for follow-up communication",
+          "required": false,
+          "dynamic_variable": false
+        },
+        {
+          "id": "firstName_param",
+          "name": "firstName",
+          "type": "string",
+          "description": "Customer's first name",
+          "required": false,
+          "dynamic_variable": false
+        },
+        {
+          "id": "lastName_param",
+          "name": "lastName",
+          "type": "string",
+          "description": "Customer's last name",
+          "required": false,
+          "dynamic_variable": false
+        },
+        {
+          "id": "phone_param",
+          "name": "phone",
+          "type": "string",
+          "description": "Customer's phone number",
+          "required": false,
+          "dynamic_variable": false
+        },
+        {
+          "id": "priority_param",
+          "name": "priority",
+          "type": "string",
+          "enum": ["High", "Medium", "Low"],
+          "description": "Urgency level: High (service down, critical issue), Medium (feature not working, moderate impact), Low (general inquiry, minor issue)",
+          "default": "Medium",
+          "required": false,
+          "dynamic_variable": false
+        },
+        {
+          "id": "departmentId_param",
+          "name": "departmentId",
+          "type": "string",
+          "description": "Department ID for routing. Use 1214071000000006907 for general inquiries, 1214071000000390035 for bugs/support, 1214071000000402481 for new features. Leave empty for default routing.",
+          "required": false,
+          "dynamic_variable": false
+        }
+      ]
+    },
+    "request_headers": [
+      {
+        "name": "Content-Type",
+        "type": "value",
+        "value": "application/json"
+      }
+    ],
+    "auth_connection": null
+  },
+  "response_timeout_secs": 20,
+  "dynamic_variables": {
+    "dynamic_variable_placeholders": {}
+  },
+  "assignments": [],
+  "disable_interruptions": false,
+  "force_pre_tool_speech": "auto",
+  "end_call_sound": null,
+  "tool_call_sound_behavior": "auto",
+  "execution_mode": "immediate"
+}
