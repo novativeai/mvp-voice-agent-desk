@@ -25,6 +25,10 @@ interface ZohoDeskTicket {
   assigneeId?: string
   createdTime: string
   modifiedTime: string
+  webUrl?: string
+  channel?: string
+  statusType?: string
+  [key: string]: any // Allow additional properties from Zoho API
 }
 
 interface ZohoDeskDepartment {
