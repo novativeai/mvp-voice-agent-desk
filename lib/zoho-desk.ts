@@ -175,11 +175,11 @@ class ZohoDeskAPI {
   }
 
   /**
-   * Get recent tickets
+   * Get recent tickets (sorted by creation time, newest first)
    */
   async getTickets(limit: number = 10): Promise<ZohoDeskTicket[]> {
     const response = await this.request<{ data: ZohoDeskTicket[] }>(
-      `/tickets?limit=${limit}&sortBy=createdTime`
+      `/tickets?limit=${limit}&sortBy=-createdTime`
     )
     return response.data || []
   }
@@ -352,8 +352,8 @@ class ZohoDeskAPI {
         this.getOrganizationInfo().catch(e => ({ error: e.message })),
         this.getDepartments().catch(e => []),
         this.getAgents().catch(e => []),
-        this.getContacts(5).catch(e => []),
-        this.getTickets(5).catch(e => []),
+        this.getContacts(10).catch(e => []),
+        this.getTickets(20).catch(e => []),
       ])
 
       return {

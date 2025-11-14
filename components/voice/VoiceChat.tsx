@@ -352,7 +352,7 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // Empty dependency array - only run once on mount
 
-  // Fetch Zoho Desk data on mount
+  // Fetch Zoho Desk data on mount and auto-refresh every 30 seconds
   React.useEffect(() => {
     const fetchZohoDeskData = async () => {
       try {
@@ -376,7 +376,17 @@ export function VoiceChat({ agentId }: VoiceChatProps) {
       }
     }
 
+    // Initial fetch
     fetchZohoDeskData()
+
+    // Auto-refresh every 30 seconds
+    const refreshInterval = setInterval(() => {
+      console.log('[Zoho Desk] Auto-refreshing data...')
+      fetchZohoDeskData()
+    }, 30000)
+
+    // Cleanup interval on unmount
+    return () => clearInterval(refreshInterval)
   }, [])
 
   const getStatusIndicator = () => {
